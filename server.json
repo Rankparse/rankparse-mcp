@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.abhibavishi/rankparse-mcp",
-  "description": "SEO data for AI agents \u2014 backlinks, DA, tech stack, and 18+ tools via Common Crawl.",
-  "version": "1.0.0",
+  "description": "SEO data for AI agents: backlinks, authority, rankings and audits. 25 tools, or 85 with an API key.",
+  "version": "1.1.0",
   "repository": {
     "url": "https://github.com/Rankparse/rankparse-mcp",
     "source": "github"
@@ -19,12 +19,18 @@
       "environmentVariables": [
         {
           "name": "RANKPARSE_API_KEY",
-          "description": "RankParse API key — get one at rankparse.com/dashboard",
+          "description": "RankParse API key (rp_...), only for the full 85-tool endpoint at mcp.rankparse.com. Get one at rankparse.com/dashboard. The OAuth connector needs no key.",
           "isRequired": true,
           "format": "string",
           "isSecret": true
         }
       ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://connect.rankparse.com/mcp"
     }
   ]
 }
