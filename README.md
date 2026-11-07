@@ -15,6 +15,8 @@ All endpoints require an `X-API-Key` header with a key in `rp_...` format. Get a
 
 On RapidAPI, authentication is handled by the gateway — include your `X-RapidAPI-Key` as usual.
 
+The MCP server has two endpoints. The OAuth connector needs no key; the full server does (see [MCP Server](#mcp-server)).
+
 ---
 
 ## Quick Start
@@ -306,14 +308,18 @@ Purchase at [rankparse.com/pricing](https://rankparse.com/pricing).
 
 ## MCP Server
 
-All endpoints are also available as MCP tools via `mcp.rankparse.com`. This lets Claude, ChatGPT, and other MCP-compatible clients call RankParse mid-conversation without custom code.
+The same lookups are available as MCP tools, so Claude, ChatGPT and other MCP clients can call RankParse mid-conversation without custom code. There are two endpoints:
 
-**SSE (Claude, ChatGPT):**
-```
-https://mcp.rankparse.com/?apiKey=rp_your_key_here
-```
+| | OAuth connector | Full server |
+|---|---|---|
+| **URL** | `https://connect.rankparse.com/mcp` | `https://mcp.rankparse.com/mcp` |
+| **Sign-in** | OAuth: Claude or ChatGPT signs in to RankParse. **No API key.** | `X-API-Key: rp_...` header. **Key required.** |
+| **Tools** | 25 read-only tools | 85 tools: 66 read-only, 19 that change something (outreach, Search Console, rank tracking, IndexNow, approval inbox) |
+| **Use it for** | Read-only SEO research from Claude or ChatGPT | Claude Code, Cursor, Windsurf and any client that can send a header |
 
-**Streamable HTTP (Claude Code, Cursor, Windsurf):**
+**Claude and ChatGPT** (no key): add `https://connect.rankparse.com/mcp` as a custom connector and sign in when asked. Do not put an API key in a connector URL.
+
+**Claude Code, Cursor, Windsurf** (key):
 ```
 https://mcp.rankparse.com/mcp
 Header: X-API-Key: rp_your_key_here
@@ -329,4 +335,4 @@ Setup guide: [rankparse.com/docs/mcp](https://rankparse.com/docs/mcp)
 |---|---|
 | `openapi.yaml` | OpenAPI 3.0 spec — import into RapidAPI, Postman, or any client generator |
 | `rankparse.postman_collection.json` | Postman collection with all endpoints pre-configured |
-| `server.json` | MCP registry entry (streamable HTTP transport) |
+| `server.json` | MCP registry entry: the OAuth connector, and the key-based full server |
